@@ -83,7 +83,7 @@ class DeliveryDetail(models.Model):
     zip = models.CharField(max_length=16,null=True,blank=True)
     phone = models.CharField(max_length=30)
     special_notes=models.CharField(max_length=100,blank=True,null=True)
-# should you make sure the phone is correct?
+
     def __str__(self):
         return f'{self.name} Delivery Detail'
 

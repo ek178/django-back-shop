@@ -12,17 +12,21 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    p_type = serializers.PrimaryKeyRelatedField(queryset=Department.objects.all())
+    p_type = DepartmentSerializer()
+
+    # p_type = serializers.PrimaryKeyRelatedField(queryset=Department.objects.all())
 
     class Meta:
         model = Product 
 
         fields = ['p_name','id', 'p_desc', 'p_price', 'p_type', 'p_amount', 'p_image']
+        # depth = 1
+
 
     def create(self, validated_data):
         product = Product.objects.create(**validated_data) 
         return product
-#add to the views try and except
+
 
 
 class ProfileSerializer2(serializers.ModelSerializer):

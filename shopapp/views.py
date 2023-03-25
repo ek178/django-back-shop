@@ -319,16 +319,25 @@ class ProductView(APIView):
 class OrderView(APIView):
 
     def get(self, request, pk=-1):
+        print(request.user.__dict__) #the problem is that user gets the data from User and not profile so the id is off
+    # # Get the currently logged-in user
+    # user = request.user
+    
+    # # Fetch the corresponding Profile object
+    # profile = get_object_or_404(Profile, user=user)
+    
+    # # Filter the Order objects based on the profile ID
+    # orders = Order.objects.filter(buyer=profile.id)
         if pk > -1:
             my_model = Order.objects.get(id=pk)
             serializer = OrderSerializer(my_model)
         else:
             # Filter orders by authenticated user's profile
-            profile = request.user.profile
-            my_model = Order.objects.filter(buyer=profile)
+            buyer_id = request.user.id
+            my_model = Order.objects.filter(buyer=buyer_id)
             serializer = OrderSerializer(my_model, many=True)
         return Response(serializer.data)
-
+ 
 
     # def get(self, request,pk=-1):
     #     if (pk > -1):
